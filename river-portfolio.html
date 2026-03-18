@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>River Primavera Wijaya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     THEME VARIABLES
+     Light/dark mode controlled by [data-theme] on <html>
+  ============================================================ */
+  [data-theme="light"] {
+    --ink: #1a1a18;
+    --ink-muted: #6b6b65;
+    --ink-faint: #b0afa8;
+    --paper: #faf9f6;
+    --paper-2: #f2f0eb;
+    --accent: #2b5a3e;
+    --accent-light: #e8f0ec;
+    --rule: #d8d6cf;
+    --tag-bg: #ede8df;
+    --tag-text: #5a5853;
+    --toggle-icon: '☀';
+  }
+  [data-theme="dark"] {
+    --ink: #f0eee7;
+    --ink-muted: #9e9c95;
+    --ink-faint: #5a5956;
+    --paper: #161614;
+    --paper-2: #1e1d1b;
+    --accent: #72b893;
+    --accent-light: #1a2e22;
+    --rule: #2e2d2a;
+    --tag-bg: #252420;
+    --tag-text: #9e9c95;
+    --toggle-icon: '☾';
+  }
+
+  /* ============================================================
+     RESET & BASE
+  ============================================================ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    transition: background 0.25s, color 0.25s;
+  }
+
+  /* ============================================================
+     NAV
+  ============================================================ */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--paper);
+    border-bottom: 0.5px solid var(--rule);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+    transition: background 0.25s;
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 18px; color: var(--ink);
+    text-decoration: none; letter-spacing: -0.02em;
+    cursor: pointer;
+  }
+  .nav-right { display: flex; align-items: center; gap: 1.75rem; }
+  .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+  .nav-links a {
+    font-size: 12px; font-weight: 400; color: var(--ink-muted);
+    text-decoration: none; letter-spacing: 0.07em; text-transform: uppercase;
+    transition: color 0.2s; cursor: pointer;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .theme-toggle {
+    background: none; border: 0.5px solid var(--rule);
+    border-radius: 2px; width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 14px; color: var(--ink-muted);
+    transition: background 0.2s, color 0.2s;
+    flex-shrink: 0;
+  }
+  .theme-toggle:hover { background: var(--paper-2); color: var(--ink); }
+
+  /* ============================================================
+     PAGE SYSTEM — only one "page" visible at a time
+  ============================================================ */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ============================================================
+     SHARED LAYOUT
+  ============================================================ */
+  .container { max-width: 880px; margin: 0 auto; padding: 0 2rem; }
+  .divider { max-width: 880px; margin: 0 auto; padding: 0 2rem; border-top: 0.5px solid var(--rule); }
+  section { max-width: 880px; margin: 0 auto; padding: 4rem 2rem; }
+  .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2.5rem; }
+  .section-header h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.75rem; letter-spacing: -0.02em; color: var(--ink); }
+  .section-header .count { font-size: 11px; color: var(--ink-faint); letter-spacing: 0.06em; }
+  .eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+
+  /* ============================================================
+     BUTTONS
+  ============================================================ */
+  .btn-primary {
+    background: var(--ink); color: var(--paper);
+    border: none; padding: 10px 22px;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.05em;
+    cursor: pointer; border-radius: 2px;
+    transition: opacity 0.2s; text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { opacity: 0.72; }
+  .btn-ghost {
+    background: transparent; color: var(--ink);
+    border: 0.5px solid var(--rule); padding: 10px 22px;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 12px; font-weight: 400; cursor: pointer; border-radius: 2px;
+    transition: background 0.2s; text-decoration: none; display: inline-block;
+  }
+  .btn-ghost:hover { background: var(--paper-2); }
+  .btn-back {
+    background: none; border: none; cursor: pointer;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 12px; color: var(--ink-muted); letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 0;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: color 0.2s;
+  }
+  .btn-back:hover { color: var(--ink); }
+
+  /* ============================================================
+     HOME PAGE — HERO
+  ============================================================ */
+  .hero {
+    max-width: 880px; margin: 0 auto;
+    padding: 7rem 2rem 5rem;
+    display: grid; grid-template-columns: 1.2fr 1fr;
+    gap: 4rem; align-items: center;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    line-height: 1.1; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-desc { font-size: 14.5px; color: var(--ink-muted); line-height: 1.85; }
+  .hero-ctas { display: flex; gap: 10px; margin-top: 2rem; flex-wrap: wrap; }
+  .hero-right { display: flex; flex-direction: column; gap: 10px; }
+  .stat-card { background: var(--paper-2); border: 0.5px solid var(--rule); border-radius: 4px; padding: 1.1rem 1.3rem; }
+  .stat-card .label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-faint); margin-bottom: 3px; }
+  .stat-card .value { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.2rem; color: var(--ink); line-height: 1.2; }
+  .stat-card .sub { font-size: 11.5px; color: var(--ink-muted); margin-top: 2px; }
+
+  /* ============================================================
+     ABOUT
+  ============================================================ */
+  .about-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 3.5rem; align-items: start; }
+  .about-body p { font-size: 14.5px; line-height: 1.9; color: var(--ink-muted); margin-bottom: 1rem; }
+  .about-body p strong { color: var(--ink); font-weight: 500; }
+  .currently { border-left: 2px solid var(--accent); padding-left: 1rem; margin-top: 1.5rem; }
+  .currently .clabel { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 6px; }
+  .currently p { font-size: 13.5px; color: var(--ink-muted); margin: 0 0 4px; }
+  .interests-list { display: flex; flex-direction: column; gap: 9px; }
+  .interest-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-muted); }
+  .interest-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+  /* ============================================================
+     EXPERIENCE
+  ============================================================ */
+  .exp-list { display: flex; flex-direction: column; }
+  .exp-item { display: grid; grid-template-columns: 140px 1fr; gap: 2rem; padding: 2rem 0; border-bottom: 0.5px solid var(--rule); }
+  .exp-item:first-child { border-top: 0.5px solid var(--rule); }
+  .exp-period { font-size: 11px; color: var(--ink-faint); letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.5; margin-bottom: 6px; }
+  .exp-company { font-size: 12px; font-weight: 500; color: var(--accent); }
+  .exp-content h3 { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.1rem; color: var(--ink); margin-bottom: 6px; line-height: 1.3; }
+  .exp-content > p { font-size: 13.5px; color: var(--ink-muted); line-height: 1.7; margin-bottom: 1rem; }
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .exp-bullets li { font-size: 13px; color: var(--ink-muted); line-height: 1.6; padding-left: 1.2rem; position: relative; }
+  .exp-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--ink-faint); }
+  .exp-bullets li strong { color: var(--ink); font-weight: 500; }
+
+  /* ============================================================
+     PROJECTS
+  ============================================================ */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0; border: 0.5px solid var(--rule); border-radius: 4px; overflow: hidden;
+  }
+  .project-card { background: var(--paper); padding: 1.5rem; border-right: 0.5px solid var(--rule); border-bottom: 0.5px solid var(--rule); transition: background 0.2s; }
+  .project-card:hover { background: var(--paper-2); }
+  .project-tag { display: inline-block; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 3px 8px; border-radius: 2px; margin-bottom: 0.75rem; }
+  .project-card h3 { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.05rem; color: var(--ink); margin-bottom: 0.5rem; line-height: 1.3; }
+  .project-card p { font-size: 13px; color: var(--ink-muted); line-height: 1.65; }
+  .project-meta { margin-top: 1rem; font-size: 11px; color: var(--ink-faint); letter-spacing: 0.04em; }
+  .proud-badge { display: inline-block; font-size: 9px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tag-text); background: var(--tag-bg); padding: 2px 7px; border-radius: 2px; margin-left: 6px; }
+
+  /* ============================================================
+     WRITING — ARTICLE LIST (home + blog index)
+  ============================================================ */
+  .articles-list { display: flex; flex-direction: column; }
+  .article-row {
+    display: grid; grid-template-columns: 80px 1fr auto;
+    gap: 1.5rem; padding: 1.5rem 0;
+    border-bottom: 0.5px solid var(--rule);
+    transition: opacity 0.2s; cursor: pointer; align-items: start;
+  }
+  .article-row:first-child { border-top: 0.5px solid var(--rule); }
+  .article-row:hover { opacity: 0.65; }
+  .article-date { font-size: 10.5px; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; padding-top: 3px; line-height: 1.5; }
+  .article-content h3 { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.05rem; color: var(--ink); margin-bottom: 4px; line-height: 1.3; }
+  .article-content p { font-size: 13px; color: var(--ink-muted); line-height: 1.65; }
+  .article-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .article-tag { font-size: 10px; padding: 2px 8px; background: var(--tag-bg); color: var(--tag-text); border-radius: 2px; letter-spacing: 0.04em; }
+  .article-arrow { font-size: 14px; color: var(--ink-faint); padding-top: 3px; align-self: start; }
+
+  /* ============================================================
+     BLOG INDEX PAGE
+  ============================================================ */
+  .blog-header {
+    max-width: 880px; margin: 0 auto;
+    padding: 5rem 2rem 3rem;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .blog-header h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.03em; color: var(--ink); margin-bottom: 0.75rem; }
+  .blog-header p { font-size: 14.5px; color: var(--ink-muted); max-width: 520px; line-height: 1.8; }
+  .blog-filters { display: flex; gap: 8px; margin-top: 1.5rem; flex-wrap: wrap; }
+  .filter-btn {
+    font-size: 11px; padding: 5px 12px; border-radius: 2px;
+    border: 0.5px solid var(--rule); background: none;
+    color: var(--ink-muted); cursor: pointer; font-family: 'DM Sans', system-ui, sans-serif;
+    letter-spacing: 0.05em; transition: background 0.15s, color 0.15s;
+  }
+  .filter-btn:hover, .filter-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .blog-list { max-width: 880px; margin: 0 auto; padding: 0 2rem 4rem; }
+
+  /* ============================================================
+     ARTICLE PAGE
+  ============================================================ */
+  .article-page-nav {
+    max-width: 880px; margin: 0 auto;
+    padding: 1.5rem 2rem;
+    border-bottom: 0.5px solid var(--rule);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .article-body { max-width: 660px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+  .article-eyebrow { display: flex; gap: 8px; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .article-body h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing: -0.03em; color: var(--ink); line-height: 1.15; margin-bottom: 1rem; }
+  .article-byline { font-size: 13px; color: var(--ink-faint); margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 0.5px solid var(--rule); }
+  .article-body .prose p { font-size: 15.5px; color: var(--ink-muted); line-height: 1.9; margin-bottom: 1.4rem; }
+  .article-body .prose p strong { color: var(--ink); font-weight: 500; }
+  .article-body .prose h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.5rem; color: var(--ink); margin: 2.5rem 0 1rem; line-height: 1.25; }
+  .article-body .prose h3 { font-size: 1rem; font-weight: 500; color: var(--ink); margin: 2rem 0 0.75rem; }
+  .article-body .prose ul { list-style: none; margin: 1rem 0 1.4rem; display: flex; flex-direction: column; gap: 8px; }
+  .article-body .prose ul li { font-size: 15px; color: var(--ink-muted); padding-left: 1.2rem; position: relative; line-height: 1.7; }
+  .article-body .prose ul li::before { content: '—'; position: absolute; left: 0; color: var(--ink-faint); }
+  .article-body .prose blockquote { border-left: 2px solid var(--accent); padding-left: 1.25rem; margin: 2rem 0; }
+  .article-body .prose blockquote p { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.15rem; font-style: italic; color: var(--ink); }
+  .article-body .prose .callout { background: var(--paper-2); border: 0.5px solid var(--rule); border-radius: 4px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+  .article-body .prose .callout p { font-size: 14px; margin-bottom: 0; }
+  .article-placeholder { text-align: center; padding: 5rem 2rem; color: var(--ink-faint); }
+  .article-placeholder p { font-size: 14px; margin-top: 0.5rem; }
+
+  /* ============================================================
+     SKILLS
+  ============================================================ */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 2rem; }
+  .skill-group-title { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.13em; color: var(--ink-faint); margin-bottom: 0.75rem; }
+  .skill-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-pill { font-size: 12px; color: var(--ink-muted); border: 0.5px solid var(--rule); padding: 4px 10px; border-radius: 2px; }
+
+  /* ============================================================
+     CONTACT
+  ============================================================ */
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .contact-text h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: 2rem; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 1rem; }
+  .contact-text p { font-size: 14.5px; color: var(--ink-muted); line-height: 1.8; margin-bottom: 1.5rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 12px; }
+  .contact-link { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
+  .contact-link:hover { color: var(--accent); }
+  .contact-link-icon { width: 32px; height: 32px; border: 0.5px solid var(--rule); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; flex-shrink: 0; color: var(--ink); }
+
+  /* ============================================================
+     FOOTER
+  ============================================================ */
+  footer { border-top: 0.5px solid var(--rule); padding: 2rem; text-align: center; font-size: 11.5px; color: var(--ink-faint); letter-spacing: 0.04em; }
+
+  /* ============================================================
+     RESPONSIVE
+  ============================================================ */
+  @media (max-width: 640px) {
+    .hero { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 1.5rem 3rem; }
+    .hero-right { flex-direction: row; overflow-x: auto; gap: 8px; }
+    .stat-card { min-width: 155px; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+    nav { padding: 0 1.25rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 11px; }
+    section { padding: 3rem 1.5rem; }
+    .article-row { grid-template-columns: 60px 1fr; }
+    .article-arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVIGATION
+============================================================ -->
+<nav>
+  <a class="nav-logo" onclick="showPage('home')" style="cursor:pointer;">RPW</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a onclick="showPage('home'); scrollToSection('about')">About</a></li>
+      <li><a onclick="showPage('home'); scrollToSection('experience')">Experience</a></li>
+      <li><a onclick="showPage('home'); scrollToSection('projects')">Projects</a></li>
+      <li><a onclick="showPage('blog')">Writing</a></li>
+      <li><a onclick="showPage('home'); scrollToSection('contact')">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" id="theme-btn">☀</button>
+  </div>
+</nav>
+
+
+<!-- ============================================================
+     PAGE: HOME
+============================================================ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <p class="eyebrow">Consultant · Builder · Perpetual Learner</p>
+      <h1>River Primavera Wijaya.<br><em>Curious about everything.</em></h1>
+      <p class="hero-desc">Management consultant at Accenture by day. By night (and weekends), I'm tinkering with Raspberry Pis, learning SQL, and writing about whatever the world throws at me — business, tech, football, and the occasional electrical circuit.</p>
+      <div class="hero-ctas">
+        <a onclick="showPage('home'); scrollToSection('projects')" class="btn-primary" style="cursor:pointer;">See my work</a>
+        <a onclick="showPage('blog')" class="btn-ghost" style="cursor:pointer;">Read the blog</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="stat-card">
+        <div class="label">Currently at</div>
+        <div class="value">Accenture</div>
+        <div class="sub">Management Consultant Analyst</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Based in</div>
+        <div class="value">Jakarta, Indonesia</div>
+        <div class="sub">University of Leeds alumnus</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Currently exploring</div>
+        <div class="value">Back-end & EE</div>
+        <div class="sub">SQL · AI models · Arduino · Raspberry Pi</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header"><h2>About me</h2></div>
+    <div class="about-grid">
+      <div class="about-body">
+        <p>Hi, I'm River — a <strong>Chinese Indonesian</strong> from Jakarta who studied Business Management with Marketing at the <strong>University of Leeds</strong>. I'm a marketer at heart who believes in the power of a good story, but I've always been pulled toward understanding how things actually work under the hood.</p>
+        <p>I'm competitive by nature — I played football and rugby seriously, got into e-sports, and now I'm channelling that energy into <strong>running and swimming</strong>. The same drive to improve applies to everything I do professionally and intellectually.</p>
+        <p>This site is where I document that journey. Projects I've built, things I've learned, ideas I can't stop thinking about. No filter, just curiosity.</p>
+        <div class="currently">
+          <div class="clabel">Currently learning</div>
+          <p>Back-end development (SQL), AI model development</p>
+          <p>Electrical engineering via Raspberry Pi &amp; Arduino projects</p>
+        </div>
+      </div>
+      <div>
+        <div class="skill-group-title" style="margin-bottom: 1rem;">Interests</div>
+        <div class="interests-list">
+          <div class="interest-item"><div class="interest-dot"></div>Football &amp; competitive sports</div>
+          <div class="interest-item"><div class="interest-dot"></div>Running &amp; swimming</div>
+          <div class="interest-item"><div class="interest-dot"></div>Business &amp; strategy</div>
+          <div class="interest-item"><div class="interest-dot"></div>Technology &amp; engineering</div>
+          <div class="interest-item"><div class="interest-dot"></div>Finance &amp; markets</div>
+          <div class="interest-item"><div class="interest-dot"></div>Storytelling &amp; writing</div>
+          <div class="interest-item"><div class="interest-dot"></div>E-sports</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-header"><h2>Experience</h2></div>
+    <div class="exp-list">
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">2024 – Present</div>
+          <div class="exp-company">Accenture</div>
+        </div>
+        <div class="exp-content">
+          <h3>Management Consultant Analyst</h3>
+          <p>Working with clients to solve complex business problems across strategy, operations, and transformation.</p>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">2024</div>
+          <div class="exp-company">mGanik</div>
+        </div>
+        <div class="exp-content">
+          <h3>Project Executive (Internship)</h3>
+          <p>mGanik is a growing startup operating across diabetes healthcare products and the sexual wellness market. As a scaling company, they needed to bring structure to how they operated — I came in to help build that foundation.</p>
+          <ul class="exp-bullets">
+            <li>Developed a business-building framework to reverse-engineer the company's success and create a repeatable model for growth — a genuinely novel challenge, as no standard framework existed that could account for the nuances of their specific market context.</li>
+            <li>Built a full <strong>Digital Asset Management (DAM) system</strong> using Synology and ResourceSpace — zero prior coding experience. Self-taught Linux, networking, kernel basics, and port forwarding to deploy a working internal tool from scratch.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header">
+      <h2>Projects</h2>
+      <span class="count">Things I've built</span>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <span class="project-tag">Infrastructure</span>
+        <h3>DAM System at mGanik <span class="proud-badge">Most proud</span></h3>
+        <p>Built a full Digital Asset Management system using Synology + ResourceSpace with zero prior coding experience. Learned Linux, networking, and port forwarding — self-hosted the whole thing.</p>
+        <div class="project-meta">Internship project · 2024</div>
+      </div>
+      <div class="project-card">
+        <span class="project-tag">Strategy</span>
+        <h3>Business-Building Framework</h3>
+        <p>Developed a framework to reverse-engineer startup success and operationalise growth — adapting theory to the messy reality of a young company in a niche market.</p>
+        <div class="project-meta">mGanik internship · 2024</div>
+      </div>
+      <div class="project-card">
+        <span class="project-tag">Hardware</span>
+        <h3>Raspberry Pi &amp; Arduino experiments</h3>
+        <p>Small hardware projects exploring electrical engineering fundamentals. Currently learning circuits, sensors, and basic embedded programming.</p>
+        <div class="project-meta">Personal · Ongoing</div>
+      </div>
+
+      <!-- ======================================================
+           ADD A NEW PROJECT — copy this block and fill it in:
+
+      <div class="project-card">
+        <span class="project-tag">YOUR TAG HERE</span>
+        <h3>Project Title</h3>
+        <p>Brief description of what you built and what you learned.</p>
+        <div class="project-meta">Context · Year</div>
+      </div>
+
+      ====================================================== -->
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WRITING PREVIEW (shows 3 latest articles) -->
+  <section id="writing-preview">
+    <div class="section-header">
+      <h2>Writing</h2>
+      <span class="count">Latest</span>
+    </div>
+    <div class="articles-list" id="home-article-list">
+      <!-- Populated by JS from ARTICLES array below -->
+    </div>
+    <div style="margin-top: 2rem;">
+      <a onclick="showPage('blog')" class="btn-ghost" style="cursor:pointer;">All articles →</a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-header"><h2>Skills</h2></div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Consulting &amp; strategy</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Strategy</span>
+          <span class="skill-pill">Frameworks</span>
+          <span class="skill-pill">Problem solving</span>
+          <span class="skill-pill">Stakeholder mgmt</span>
+          <span class="skill-pill">Marketing (STP)</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Technical (learning)</div>
+        <div class="skill-pills">
+          <span class="skill-pill">SQL</span>
+          <span class="skill-pill">Linux</span>
+          <span class="skill-pill">Networking</span>
+          <span class="skill-pill">Raspberry Pi</span>
+          <span class="skill-pill">Arduino</span>
+          <span class="skill-pill">AI / ML basics</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Tools</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Synology / NAS</span>
+          <span class="skill-pill">ResourceSpace</span>
+          <span class="skill-pill">Excel</span>
+          <span class="skill-pill">PowerPoint</span>
+          <span class="skill-pill">Notion</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Human skills</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Storytelling</span>
+          <span class="skill-pill">Writing</span>
+          <span class="skill-pill">Curiosity</span>
+          <span class="skill-pill">Competitiveness</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-text">
+        <h2>Let's talk.</h2>
+        <p>I'm always up for a good conversation — whether it's about a project, an idea, a collaboration, or just something interesting you've been thinking about.</p>
+        <a href="mailto:rivwij@gmail.com" class="btn-primary">Send me an email</a>
+      </div>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/river-wijaya" class="contact-link" target="_blank">
+          <div class="contact-link-icon">in</div>
+          River Wijaya on LinkedIn
+        </a>
+        <a href="https://github.com/Onchch" class="contact-link" target="_blank">
+          <div class="contact-link-icon">gh</div>
+          Onchch on GitHub
+        </a>
+        <a href="mailto:rivwij@gmail.com" class="contact-link">
+          <div class="contact-link-icon">@</div>
+          rivwij@gmail.com
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>River Primavera Wijaya · Jakarta, Indonesia · Always learning</p>
+  </footer>
+</div><!-- /page-home -->
+
+
+<!-- ============================================================
+     PAGE: BLOG INDEX
+============================================================ -->
+<div class="page" id="page-blog">
+  <div class="blog-header">
+    <p class="eyebrow">Writing</p>
+    <h1>Articles, essays &amp; thoughts.</h1>
+    <p>A mix of technical write-ups, business reflections, current affairs commentary, and whatever else I can't stop thinking about.</p>
+    <div class="blog-filters">
+      <button class="filter-btn active" onclick="filterArticles('all', this)">All</button>
+      <button class="filter-btn" onclick="filterArticles('Tech', this)">Tech</button>
+      <button class="filter-btn" onclick="filterArticles('Strategy', this)">Strategy</button>
+      <button class="filter-btn" onclick="filterArticles('Learning', this)">Learning</button>
+      <button class="filter-btn" onclick="filterArticles('News', this)">News</button>
+      <button class="filter-btn" onclick="filterArticles('Sports', this)">Sports</button>
+    </div>
+  </div>
+  <div class="blog-list">
+    <div class="articles-list" id="blog-article-list">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+  <footer>
+    <p>River Primavera Wijaya · Jakarta, Indonesia · Always learning</p>
+  </footer>
+</div><!-- /page-blog -->
+
+
+<!-- ============================================================
+     PAGE: ARTICLE READER
+============================================================ -->
+<div class="page" id="page-article">
+  <div class="article-page-nav">
+    <button class="btn-back" onclick="showPage('blog')">← Back to writing</button>
+    <span style="font-size:11px; color: var(--ink-faint); letter-spacing: 0.05em;" id="article-nav-tag"></span>
+  </div>
+  <div class="article-body">
+    <div class="article-eyebrow" id="article-tags-display"></div>
+    <h1 id="article-title"></h1>
+    <div class="article-byline" id="article-byline"></div>
+    <div class="prose" id="article-prose"></div>
+  </div>
+  <footer>
+    <p>River Primavera Wijaya · Jakarta, Indonesia · Always learning</p>
+  </footer>
+</div><!-- /page-article -->
+
+
+<!-- ============================================================
+     ARTICLES DATA
+     ============================================================
+     TO ADD A NEW ARTICLE:
+     1. Copy the template block below
+     2. Fill in: id, title, date, tags, summary, content
+     3. For content, use the helper tags:
+        <p>paragraph</p>
+        <h2>section heading</h2>
+        <h3>sub-heading</h3>
+        <ul><li>bullet item</li></ul>
+        <blockquote><p>pull quote</p></blockquote>
+        <div class="callout"><p>highlighted note</p></div>
+     4. Save and refresh — it appears automatically everywhere
+     ============================================================ -->
+<script>
+const ARTICLES = [
+
+  /* ============================================================
+     ARTICLE TEMPLATE — copy from here...
+
+  {
+    id: "your-article-slug",
+    title: "Your Article Title Here",
+    date: "Mar 2025",
+    tags: ["Tag1", "Tag2"],
+    summary: "One or two sentence summary shown in the article list.",
+    content: `
+      <p>Your opening paragraph goes here. Write naturally — this is your space.</p>
+
+      <h2>A section heading</h2>
+      <p>More content here.</p>
+
+      <ul>
+        <li>A bullet point</li>
+        <li>Another bullet point</li>
+      </ul>
+
+      <blockquote><p>A pull quote or key insight you want to highlight.</p></blockquote>
+
+      <div class="callout"><p>A callout box — good for tips, caveats, or asides.</p></div>
+
+      <h2>Another section</h2>
+      <p>Keep writing...</p>
+    `
+  },
+
+  ...to here ============================================================ */
+
+  {
+    id: "dam-system-no-code",
+    title: "Building a DAM system with no coding experience",
+    date: "Coming soon",
+    tags: ["Tech", "Learning", "Infrastructure"],
+    summary: "How vibe-coding, a lot of Googling, and genuine stubbornness got me from zero to a working self-hosted Digital Asset Management system.",
+    content: `
+      <p>This article is coming soon. Check back shortly — or <a href="mailto:rivwij@gmail.com">drop me a message</a> if you're curious about the project in the meantime.</p>
+    `
+  },
+
+  {
+    id: "theory-vs-reality-frameworks",
+    title: "Theory vs. reality: what business frameworks get wrong about startups",
+    date: "Coming soon",
+    tags: ["Strategy", "Startups", "Consulting"],
+    summary: "Building a growth framework from scratch taught me that most models are designed for companies that already know what they are.",
+    content: `
+      <p>This article is coming soon. The short version: STP is a good start, but it assumes you already know your market. What happens when you don't?</p>
+    `
+  },
+
+  {
+    id: "getting-into-electrical-engineering",
+    title: "Getting into electrical engineering as a business person",
+    date: "Coming soon",
+    tags: ["Learning", "Tech"],
+    summary: "Why I started, what surprised me, and what Raspberry Pi has to do with understanding the world better.",
+    content: `
+      <p>This article is coming soon. More from the lab (my bedroom) shortly.</p>
+    `
+  },
+
+  {
+    id: "weekly-news-commentary",
+    title: "This week in business & tech — a running commentary",
+    date: "Coming soon",
+    tags: ["News", "Finance", "Tech"],
+    summary: "A recurring series where I digest what I've been reading across finance, technology, and global business news.",
+    content: `
+      <p>First edition coming soon. The goal: one article a week, covering 3–5 things that caught my attention and why I think they matter.</p>
+    `
+  },
+
+];
+/* ============================================================
+   END OF ARTICLES — no need to edit below this line
+============================================================ */
+
+
+/* --- THEME TOGGLE --- */
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('theme-btn');
+  if (html.dataset.theme === 'light') {
+    html.dataset.theme = 'dark';
+    btn.textContent = '☾';
+  } else {
+    html.dataset.theme = 'light';
+    btn.textContent = '☀';
+  }
+  localStorage.setItem('rpw-theme', html.dataset.theme);
+}
+
+/* Restore saved theme */
+(function() {
+  const saved = localStorage.getItem('rpw-theme');
+  if (saved) {
+    document.documentElement.dataset.theme = saved;
+    const btn = document.getElementById('theme-btn');
+    if (btn) btn.textContent = saved === 'dark' ? '☾' : '☀';
+  }
+})();
+
+/* --- PAGE NAVIGATION --- */
+let currentPage = 'home';
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  currentPage = page;
+  window.scrollTo(0, 0);
+  if (page === 'blog') renderBlogList(ARTICLES);
+}
+
+function scrollToSection(id) {
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, 50);
+}
+
+/* --- RENDER ARTICLE ROW --- */
+function articleRowHTML(a, maxArticles) {
+  return `
+    <div class="article-row" onclick="openArticle('${a.id}')">
+      <div class="article-date">${a.date.replace(' ', '<br>')}</div>
+      <div class="article-content">
+        <h3>${a.title}</h3>
+        <p>${a.summary}</p>
+        <div class="article-tags">${a.tags.map(t => `<span class="article-tag">${t}</span>`).join('')}</div>
+      </div>
+      <div class="article-arrow">→</div>
+    </div>
+  `;
+}
+
+/* --- HOME PREVIEW (3 articles) --- */
+function renderHomePreview() {
+  const el = document.getElementById('home-article-list');
+  if (!el) return;
+  el.innerHTML = ARTICLES.slice(0, 3).map(a => articleRowHTML(a)).join('');
+}
+
+/* --- BLOG INDEX --- */
+let activeFilter = 'all';
+function renderBlogList(articles) {
+  const el = document.getElementById('blog-article-list');
+  if (!el) return;
+  const filtered = activeFilter === 'all' ? articles : articles.filter(a => a.tags.includes(activeFilter));
+  el.innerHTML = filtered.length
+    ? filtered.map(a => articleRowHTML(a)).join('')
+    : `<p style="padding: 3rem 0; color: var(--ink-faint); font-size: 14px;">No articles in this category yet.</p>`;
+}
+
+function filterArticles(tag, btn) {
+  activeFilter = tag;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderBlogList(ARTICLES);
+}
+
+/* --- OPEN ARTICLE --- */
+function openArticle(id) {
+  const a = ARTICLES.find(x => x.id === id);
+  if (!a) return;
+  document.getElementById('article-title').textContent = a.title;
+  document.getElementById('article-byline').textContent = `River Primavera Wijaya · ${a.date}`;
+  document.getElementById('article-nav-tag').textContent = a.tags[0] || '';
+  document.getElementById('article-tags-display').innerHTML = a.tags.map(t => `<span class="article-tag">${t}</span>`).join('');
+  document.getElementById('article-prose').innerHTML = a.content;
+  showPage('article');
+}
+
+/* --- INIT --- */
+renderHomePreview();
+</script>
+
+</body>
+</html>
