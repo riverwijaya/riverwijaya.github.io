@@ -55,21 +55,43 @@ const ARTICLES = [
 
   {
     id:      "dam-system-no-code",
-    title:   "Building a DAM system with no coding experience",
-    date:    "Coming soon",
+    title:   "Building an internal DAM system with no coding experience",
+    date:    "01/03/2026",
     tags:    ["Tech", "Learning", "Infrastructure"],
     summary: "How vibe-coding, a lot of Googling, and genuine stubbornness got me from zero to a working self-hosted Digital Asset Management system.",
     content: `
-      <p>This article is coming soon.
-      <a href="mailto:rivwij@gmail.com" style="color:var(--accent);">Reach out</a>
-      if you're curious about the project in the meantime.</p>
+      <p> I thought that taking on this project might have been a bad idea. My boss (the founder) put me on a project to help finalized marketing assets much easier within mGanik. As a largely e-commerce-driven company these marketing assets that are digital are what drives the business, what drives customers to purchase their products with a huge focus on driving impressions while optimizing Return on Ad Spend (ROAS).
+
+As part of this project to revamp how marketing assets were made I was tasked with dealing with a key problem.
+
+The company had over 42TB of raw digital assets consolidated within an internal server. To create certain videos, or re-use old assets the marketing team had to spend hours finding the exact file. Mind you, these file-naming conventions aren’t only inconsistent but prone to human error. The file-naming conventions would only really be known by the people who shot these video assets which made it a huge hassle when that exact person wasn’t there or had already left the company for more than a few years. 
+
+So what was the solution? Simple! a Digital Asset Management (DAM) system.
+
+Easy enough right? 
+
+All I had to do was gather the team, follow the project management system process that had already existed within the company and just execute right? 
+
+I wish it was as easy as that. 
+
+Following up on signatures to move forward on just the idea for the project took ages. Technology team members were also scattered and utilized for different projects. I figured that if nothing could move forward in the beginning I’d just better take matters into my own hands. 
+
+So I learnt EVERYTHING I could through AI, Google searches, documentation and how-to-guides.
+
+I learnt how to host a server, obtain secure HTTPS and wildcard certificates, co-ordinate with the ISP to port-forward so that it can be accessible online, how to use SSH to manage a container, manage permissions through linux, how to setup SQL back-end and logins, how volumes within a container can be connected and how to connect a volume with an external server through NFS4.
+
+It was honestly the most intellectually demanding and abstract piece of work that I had to work on but it probably was my most proudest because of that, and for that I am very grateful.
+
+Especially, when I showed the completed, working project to my peers and the boss, the gratefulness and the look of amazement, I will never forget.
+
+      </p>
     `
   },
 
   {
-    id:      "theory-vs-reality",
-    title:   "Theory vs. reality: what business frameworks get wrong about startups",
-    date:    "Coming soon",
+    id:      "working-in-startups-is-difficult",
+    title:   "Why Startups are so hard to work in (and how to survive them)",
+    date:    "01/03/2026",
     tags:    ["Strategy", "Startups", "Consulting"],
     summary: "Building a growth framework from scratch taught me that most models are designed for companies that already know what they are.",
     content: `
