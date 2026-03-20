@@ -255,9 +255,15 @@ function smoothScroll(sectionId) {
 
 // builds a single article row for list views
 function buildArticleRow(article) {
+  // Use article.image if provided, otherwise show placeholder
+  const thumb = article.image
+    ? `<div class="article-thumb"><img src="${article.image}" alt="${article.title}" /></div>`
+    : `<div class="article-thumb-placeholder">✦</div>`;
+
   return `
     <div class="article-row" onclick="openArticle('${article.id}')">
       <div class="article-date">${article.date.replace(' ', '<br>')}</div>
+      ${thumb}
       <div class="article-content">
         <h3>${article.title}</h3>
         <p>${article.summary}</p>
@@ -318,3 +324,58 @@ function openArticle(id) {
 ===================================================== */
 
 renderHomePreview();
+
+
+/* =====================================================
+   9. TYPEWRITER EFFECT
+   Cycles through words in the hero section.
+   To change the words, edit the WORDS array below.
+===================================================== */
+
+const WORDS = [
+  'a Consultant.',
+  'a Builder.',
+  'a Tech Enthusiast.',
+  'always learning.',
+];
+
+(function typewriter() {
+  const el     = document.getElementById('typewriter-word');
+  if (!el) return;
+
+  let wordIdx  = 0;
+  let charIdx  = 0;
+  let deleting = false;
+  const TYPE_SPEED   = 80;
+  const DELETE_SPEED = 45;
+  const PAUSE_END    = 1800; // ms to wait at end of word
+  const PAUSE_START  = 300;  // ms to wait before typing next word
+
+  function tick() {
+    const word    = WORDS[wordIdx];
+    const current = word.slice(0, charIdx);
+    el.textContent = current;
+
+    if (!deleting) {
+      if (charIdx < word.length) {
+        charIdx++;
+        setTimeout(tick, TYPE_SPEED);
+      } else {
+        // finished typing — pause then start deleting
+        setTimeout(() => { deleting = true; tick(); }, PAUSE_END);
+      }
+    } else {
+      if (charIdx > 0) {
+        charIdx--;
+        setTimeout(tick, DELETE_SPEED);
+      } else {
+        // finished deleting — move to next word
+        deleting = false;
+        wordIdx  = (wordIdx + 1) % WORDS.length;
+        setTimeout(tick, PAUSE_START);
+      }
+    }
+  }
+
+  tick();
+})();
