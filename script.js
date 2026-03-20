@@ -60,31 +60,29 @@ const ARTICLES = [
     tags:    ["Tech", "Learning", "Infrastructure"],
     summary: "How vibe-coding, a lot of Googling, and genuine stubbornness got me from zero to a working self-hosted Digital Asset Management system.",
     content: `
-      <p> I thought that taking on this project might have been a bad idea. My boss (the founder) put me on a project to help finalized marketing assets much easier within mGanik. As a largely e-commerce-driven company these marketing assets that are digital are what drives the business, what drives customers to purchase their products with a huge focus on driving impressions while optimizing Return on Ad Spend (ROAS).
+<p>I thought that taking on this project might have been a bad idea. My boss, the founder, put me on a project to help finalize marketing assets more easily within mGanik. As a largely e-commerce-driven company, these digital marketing assets are what drive the business. They influence customer purchases through a strong focus on impressions while optimizing return on ad spend (ROAS).</p>
 
-As part of this project to revamp how marketing assets were made I was tasked with dealing with a key problem.
+<p>As part of this project to revamp how marketing assets were made, I was tasked with dealing with a key problem.</p>
 
-The company had over 42TB of raw digital assets consolidated within an internal server. To create certain videos, or re-use old assets the marketing team had to spend hours finding the exact file. Mind you, these file-naming conventions aren’t only inconsistent but prone to human error. The file-naming conventions would only really be known by the people who shot these video assets which made it a huge hassle when that exact person wasn’t there or had already left the company for more than a few years. 
+<p>The company had over 42TB of raw digital assets consolidated within an internal server. To create certain videos, or re-use old assets, the marketing team had to spend hours finding the exact file. The file-naming conventions were not only inconsistent, but also prone to human error. In practice, those conventions were often only understood by the people who originally shot the video assets, which made it a huge hassle when that exact person was unavailable or had already left the company years earlier.</p>
 
-So what was the solution? Simple! a Digital Asset Management (DAM) system.
+<p>So what was the solution? Simple: a Digital Asset Management (DAM) system.</p>
 
-Easy enough right? 
+<p>Easy enough, right?</p>
 
-All I had to do was gather the team, follow the project management system process that had already existed within the company and just execute right? 
+<p>All I had to do was gather the team, follow the project management process already in place within the company, and execute.</p>
 
-I wish it was as easy as that. 
+<p>I wish it had been that easy.</p>
 
-Following up on signatures to move forward on just the idea for the project took ages. Technology team members were also scattered and utilized for different projects. I figured that if nothing could move forward in the beginning I’d just better take matters into my own hands. 
+<p>Following up on approvals just to move forward with the idea took ages. Technology team members were also scattered across different projects. I figured that if nothing could move forward at the beginning, I had better take matters into my own hands.</p>
 
-So I learnt EVERYTHING I could through AI, Google searches, documentation and how-to-guides.
+<p>So I learned everything I could through AI, Google searches, documentation, and how-to guides.</p>
 
-I learnt how to host a server, obtain secure HTTPS and wildcard certificates, co-ordinate with the ISP to port-forward so that it can be accessible online, how to use SSH to manage a container, manage permissions through linux, how to setup SQL back-end and logins, how volumes within a container can be connected and how to connect a volume with an external server through NFS4.
+<p>I learned how to host a server, obtain secure HTTPS and wildcard certificates, coordinate with the ISP to port-forward access so the system could be reached online, use SSH to manage a container, manage permissions through Linux, set up the SQL back end and logins, understand how volumes within a container connect, and connect a volume to an external server through NFS4.</p>
 
-It was honestly the most intellectually demanding and abstract piece of work that I had to work on but it probably was my most proudest because of that, and for that I am very grateful.
+<p>It was honestly the most intellectually demanding and abstract piece of work I had taken on, but that is also why I am probably proudest of it.</p>
 
-Especially, when I showed the completed, working project to my peers and the boss, the gratefulness and the look of amazement, I will never forget.
-
-      </p>
+<p>Especially when I showed the completed, working project to my peers and my boss—the gratitude and amazement on their faces is something I will never forget.</p>
     `
   },
 
@@ -255,15 +253,9 @@ function smoothScroll(sectionId) {
 
 // builds a single article row for list views
 function buildArticleRow(article) {
-  // Use article.image if provided, otherwise show placeholder
-  const thumb = article.image
-    ? `<div class="article-thumb"><img src="${article.image}" alt="${article.title}" /></div>`
-    : `<div class="article-thumb-placeholder">✦</div>`;
-
   return `
     <div class="article-row" onclick="openArticle('${article.id}')">
       <div class="article-date">${article.date.replace(' ', '<br>')}</div>
-      ${thumb}
       <div class="article-content">
         <h3>${article.title}</h3>
         <p>${article.summary}</p>
@@ -336,7 +328,6 @@ const WORDS = [
   'a Consultant.',
   'a Builder.',
   'a Tech Enthusiast.',
-  'always learning.',
 ];
 
 (function typewriter() {
