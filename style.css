@@ -859,8 +859,7 @@ footer {
   .hero-photo-stats { flex-direction: row; flex-wrap: wrap; gap: 1rem; }
 }
 @media (max-width: 600px) {
-  .hero-photo-wrap { flex-direction: column; }
-  .hero-photo { width: 100%; }
-  .article-row { grid-template-columns: 68px 1fr; }
-  .article-thumb, .article-thumb-placeholder { display: none; }
+  nav               { padding: 0 1.25rem; }
+  .nav-links        { display: none; }
+  .hero             { padding: 5rem 1.25rem 3rem; }
 }
