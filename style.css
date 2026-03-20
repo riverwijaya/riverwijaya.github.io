@@ -859,7 +859,7 @@ footer {
   .hero-photo-stats { flex-direction: row; flex-wrap: wrap; gap: 1rem; }
 }
 @media (max-width: 600px) {
-  nav               { padding: 1rem 1.25rem; }
+  nav               { padding: 0.5rem 1.25rem; }
   .nav-links        { display: none; }
   .hero             { padding: 5rem 1.25rem 3rem; }
 }
