@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>River Primavera Wijaya</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div id="cursor">
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+  </div>
+
+  <!-- Scroll progress bar -->
+  <div id="progress"></div>
+
+  <!-- Ghost text behind hero -->
+  <div class="hero-ghost-text">Curious.</div>
+
+
+  <!-- ================================================
+       NAVIGATION
+  ================================================ -->
+  <nav>
+    <div class="nav-logo" onclick="showPage('home')">RPW</div>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a onclick="showPage('home'); smoothScroll('about')">About</a></li>
+        <li><a onclick="showPage('home'); smoothScroll('experience')">Experience</a></li>
+        <li><a onclick="showPage('home'); smoothScroll('projects')">Projects</a></li>
+        <li><a onclick="showPage('blog')">Writing</a></li>
+        <li><a onclick="showPage('home'); smoothScroll('contact')">Contact</a></li>
+      </ul>
+      <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">☀</button>
+    </div>
+  </nav>
+
+
+  <!-- ================================================
+       PAGE: HOME
+  ================================================ -->
+  <div class="page active" id="page-home">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Consultant · Builder · Tech Enthusiast</p>
+        <h1>River Primavera<br><em>Wijaya.</em></h1>
+        <p class="hero-desc">
+          Management consultant at Accenture. Passionate about building things,
+          constantly learning and documenting that journey along the way.
+        </p>
+        <div class="hero-ctas">
+          <button class="btn-primary" onclick="showPage('home'); smoothScroll('projects')">
+            <span>See my work</span>
+          </button>
+          <button class="btn-ghost" onclick="showPage('blog')">Read the blog</button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="s-val">Accenture</span>
+            <span class="s-lbl">Currently at</span>
+          </div>
+          <div class="hero-stat">
+            <span class="s-val">Jakarta, Indonesia</span>
+            <span class="s-lbl">From</span>
+          </div>
+          <div class="hero-stat">
+            <span class="s-val">Linux, Networks, Applications</span>
+            <span class="s-lbl">Exploring</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ABOUT -->
+    <div class="divider"></div>
+    <section id="about">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="section-label">About me</div>
+        </div>
+        <div class="about-grid">
+          <div class="about-body">
+            <p class="reveal">
+              Hi, I'm River an Indonesian who studied Business Management with Marketing 
+              at the <strong>University of Leeds</strong>. I'm a marketer at heart who 
+              believes in the power of a good story. However, as I've recently been drawn 
+              into the world of tech, software and engineering, I've been compelled to 
+              combine storytelling with technical skills to build things that are
+              both functional and meaningful.
+            </p>
+            <p class="reveal reveal-d2">
+              I'm competitive by nature I've played football and rugby seriously, got into
+              e-sports, and now I'm channelling that energy into running and fitness.
+              That same drive complies me do to everything I do at a higher level 
+              both in my professional and perosnal life.
+            </p>
+            <p class="reveal reveal-d3">
+              This site is where I document that journey. Projects I've built, things I've
+              learned, ideas I can't stop thinking about. I thought that if I put it out there,
+              not only does it hold me accountable to learn and build at a deep enough level, but
+              it also makes sure that whatever I learn I can look back to or retain.
+            </p>
+    </section>
+
+
+    <!-- EXPERIENCE -->
+    <div class="divider"></div>
+    <section id="experience">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="section-label">Experience</div>
+          <h2 class="section-title">Where I've <em>worked.</em></h2>
+        </div>
+
+        <div class="exp-item reveal">
+          <div>
+            <div class="exp-period">May 2026 – Present</div>
+            <div class="exp-company">Accenture</div>
+          </div>
+          <div class="exp-content">
+            <h3>Management Consultant Analyst</h3>
+            <p>Working with clients to solve complex business problems across strategy, operations, and transformation.</p>
+          </div>
+        </div>
+
+        <div class="exp-item reveal reveal-d1">
+          <div>
+            <div class="exp-period">September 2025 - February 2026</div>
+            <div class="exp-company">mGanik</div>
+          </div>
+          <div class="exp-content">
+            <h3>Project Executive (Internship)</h3>
+            <p>
+              mGanik is a growing group of brands operating across diabetes healthcare products and
+              the sexual wellness market. As a scaling company, they needed to bring structure
+              to how they operated.
+            </p>
+            <ul class="exp-bullets">
+              <li>
+                Developed a business-building framework to reverse-engineer the company's
+                success and create a repeatable model for growth,
+                adapting business-school theory into practice.
+              </li>
+              <li>
+                Built a full <strong>Digital Asset Management (DAM) system</strong> using
+                Synology and ResourceSpace — zero prior coding experience. Self-taught Linux,
+                networking, kernel basics, and port forwarding to deploy a working internal
+                tool from scratch.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- PROJECTS -->
+    <div class="divider"></div>
+    <section id="projects">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="section-label">Projects</div>
+          <h2 class="section-title">Things I've <em>built.</em></h2>
+        </div>
+        <div class="projects-grid">
+
+          <div class="project-card reveal">
+            <div class="project-num">01</div>
+            <span class="project-tag-pill">Infrastructure</span>
+            <h3>DAM System at mGanik <span class="proud-badge">Most proud</span></h3>
+            <p>Built a full Digital Asset Management system using Synology + ResourceSpace with zero coding experience. Learned Linux, networking, and port forwarding — self-hosted the whole thing.</p>
+            <div class="project-card-meta"><span>Internship · 2026</span></div>
+          </div>
+
+          <div class="project-card reveal reveal-d1">
+            <div class="project-num">02</div>
+            <span class="project-tag-pill">Strategy</span>
+            <h3>Business-Building Framework</h3>
+            <p>Developed a framework to reverse-engineer startup success and operationalise growth — adapting theory to the messy reality of a young company in a niche market.</p>
+            <div class="project-card-meta"><span>mGanik · 2025</span></div>
+          </div>
+
+          <div class="project-card reveal reveal-d2">
+            <div class="project-num">03</div>
+            <span class="project-tag-pill">Hardware</span>
+            <h3>Raspberry Pi &amp; Arduino Experiments</h3>
+            <p>Small hardware projects exploring electrical engineering fundamentals — circuits, sensors, and basic embedded programming.</p>
+            <div class="project-card-meta"><span>Personal · Ongoing</span></div>
+          </div>
+
+          <!--
+            ADD A PROJECT — copy this block and fill it in:
+
+            <div class="project-card">
+              <div class="project-num">04</div>
+              <span class="project-tag-pill">Your Tag</span>
+              <h3>Project Title</h3>
+              <p>Brief description of what you built and what you learned.</p>
+              <div class="project-card-meta"><span>Context · Year</span></div>
+            </div>
+          -->
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- WRITING PREVIEW -->
+    <div class="divider"></div>
+    <section id="writing-preview">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="section-label">Writing</div>
+          <h2 class="section-title">Latest <em>articles.</em></h2>
+        </div>
+        <!-- populated by script.js -->
+        <div class="articles-list reveal" id="home-article-list"></div>
+        <div style="margin-top: 2rem;" class="reveal reveal-d1">
+          <button class="btn-ghost" onclick="showPage('blog')">All writing →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <div class="divider"></div>
+    <section id="contact">
+      <div class="wrap">
+        <div class="contact-grid">
+          <div class="reveal">
+            <div class="section-label">Contact</div>
+            <h2 class="contact-h">Let's <em>talk.</em></h2>
+            <p class="contact-body">
+              Always up for a good conversation — whether it's about a project,
+              an idea, a collaboration, or just something interesting you've been thinking about.
+            </p>
+            <a href="mailto:rivwij@gmail.com" class="btn-primary"><span>Send me an email</span></a>
+          </div>
+          <div class="reveal reveal-d2">
+            <div class="contact-links">
+              <a href="https://www.linkedin.com/in/river-wijaya" class="contact-link" target="_blank">
+                <div class="contact-link-icon">in</div>
+                River Wijaya — LinkedIn
+              </a>
+              <a href="https://github.com/Onchch" class="contact-link" target="_blank">
+                <div class="contact-link-icon">gh</div>
+                Onchch — GitHub
+              </a>
+              <a href="mailto:rivwij@gmail.com" class="contact-link">
+                <div class="contact-link-icon">@</div>
+                rivwij@gmail.com
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>River Primavera Wijaya</span>
+      <span>Jakarta, Indonesia · Always learning</span>
+    </footer>
+
+  </div><!-- /page-home -->
+
+
+  <!-- ================================================
+       PAGE: BLOG INDEX
+  ================================================ -->
+  <div class="page" id="page-blog">
+    <div class="wrap">
+      <div class="blog-hero">
+        <button class="btn-back" onclick="showPage('home')" style="margin-bottom: 2rem;">← Home</button>
+        <div class="section-label">Writing</div>
+        <h1>Articles, essays<br>&amp; <em>thoughts.</em></h1>
+        <p>A mix of technical write-ups, business reflections, current affairs, and whatever else I can't stop thinking about.</p>
+        <div class="blog-filters">
+          <button class="filter-btn active" onclick="filterArticles('all', this)">All</button>
+          <button class="filter-btn" onclick="filterArticles('Tech', this)">Tech</button>
+          <button class="filter-btn" onclick="filterArticles('Strategy', this)">Strategy</button>
+          <button class="filter-btn" onclick="filterArticles('Learning', this)">Learning</button>
+          <button class="filter-btn" onclick="filterArticles('News', this)">News</button>
+          <button class="filter-btn" onclick="filterArticles('Sports', this)">Sports</button>
+        </div>
+      </div>
+      <div class="blog-list">
+        <!-- populated by script.js -->
+        <div class="articles-list" id="blog-article-list"></div>
+      </div>
+    </div>
+    <footer>
+      <span>River Primavera Wijaya</span>
+      <span>Jakarta, Indonesia · Always learning</span>
+    </footer>
+  </div><!-- /page-blog -->
+
+
+  <!-- ================================================
+       PAGE: ARTICLE READER
+  ================================================ -->
+  <div class="page" id="page-article">
+    <div class="wrap">
+      <div class="article-page-header">
+        <button class="btn-back" onclick="showPage('blog')" style="margin-bottom: 2rem;">← Back to writing</button>
+        <!-- populated by script.js -->
+        <div id="art-tags" style="display: flex; gap: 6px; flex-wrap: wrap;"></div>
+        <h1 id="art-title"></h1>
+        <div class="article-byline">
+          <span>River Primavera Wijaya</span>
+          <span id="art-date"></span>
+        </div>
+      </div>
+      <!-- populated by script.js -->
+      <div class="article-prose" id="art-prose"></div>
+    </div>
+    <footer>
+      <span>River Primavera Wijaya</span>
+      <span>Jakarta, Indonesia · Always learning</span>
+    </footer>
+  </div><!-- /page-article -->
+
+
+  <!-- JavaScript — loaded last so DOM is ready -->
+  <script src="script.js"></script>
+
+</body>
+</html>
