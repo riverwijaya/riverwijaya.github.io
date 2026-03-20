@@ -1,0 +1,77 @@
+---
+// src/pages/blog/index.astro  — Blog index
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+// Collect all unique tags for the filter buttons
+const allTags = [...new Set(posts.flatMap(p => p.data.tags))].sort();
+---
+
+<BaseLayout title="Writing — River Primavera Wijaya">
+  <div class="wrap">
+    <div class="blog-hero">
+      <a href="/" class="btn-back" style="margin-bottom: 2rem; display: inline-flex;">← Home</a>
+      <div class="section-label">Writing</div>
+      <h1>Articles, essays<br />&amp; <em>thoughts.</em></h1>
+      <p>A mix of technical write-ups, business reflections, current affairs, and whatever else I can't stop thinking about.</p>
+
+      <!-- Tag filters (JS-powered client-side filtering) -->
+      <div class="blog-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        {allTags.map(tag => (
+          <button class="filter-btn" data-filter={tag}>{tag}</button>
+        ))}
+      </div>
+    </div>
+
+    <div class="blog-list">
+      <div class="articles-list" id="post-list">
+        {posts.map(post => (
+          <a
+            href={`/posts/${post.id}`}
+            class="article-row"
+            data-tags={post.data.tags.join(',')}
+          >
+            <div class="article-date">{post.data.date}</div>
+            <div class="article-content">
+              <h3>{post.data.title}</h3>
+              <p>{post.data.summary}</p>
+              <div class="article-tags">
+                {post.data.tags.map(tag => (
+                  <span class="article-tag">{tag}</span>
+                ))}
+              </div>
+            </div>
+            <div class="article-arrow">↗</div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Client-side tag filtering
+    const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const rows = document.querySelectorAll<HTMLElement>('.article-row[data-tags]');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter!;
+
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        rows.forEach(row => {
+          const tags = row.dataset.tags?.split(',') ?? [];
+          const show = filter === 'all' || tags.includes(filter);
+          (row as HTMLElement).style.display = show ? '' : 'none';
+        });
+      });
+    });
+  </script>
+</BaseLayout>

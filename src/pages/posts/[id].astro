@@ -1,0 +1,40 @@
+---
+// src/pages/posts/[id].astro
+// Generates one page per blog post from src/content/blog/*.md
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map(post => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={`${post.data.title} — River Primavera Wijaya`}>
+  <div class="wrap">
+    <div class="article-page-header">
+      <a href="/blog" class="btn-back" style="margin-bottom: 2rem; display: inline-flex;">← Back to writing</a>
+      <div class="article-tags" style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 0.75rem;">
+        {post.data.tags.map(tag => (
+          <span class="article-tag">{tag}</span>
+        ))}
+      </div>
+      <h1>{post.data.title}</h1>
+      <div class="article-byline">
+        <span>River Primavera Wijaya</span>
+        <span>{post.data.date}</span>
+      </div>
+    </div>
+
+    <!-- Astro renders the markdown body here -->
+    <div class="article-prose">
+      <Content />
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,292 @@
+---
+// src/pages/index.astro  — Home page
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Grab the 3 most recent non-draft posts for the writing preview
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const recentPosts = allPosts
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 3);
+---
+
+<BaseLayout title="River Primavera Wijaya">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Consultant · Builder · Perpetual Learner</p>
+      <h1>River Primavera<br /><em>Wijaya.</em></h1>
+      <p class="hero-desc">
+        Management consultant at Accenture by day. By night and weekends,
+        I'm tinkering with Raspberry Pis, learning SQL, and writing about whatever
+        the world throws at me — business, tech, football, and the occasional circuit.
+      </p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-primary"><span>See my work</span></a>
+        <a href="/blog" class="btn-ghost">Read the blog</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="s-val">Accenture</span>
+          <span class="s-lbl">Currently at</span>
+        </div>
+        <div class="hero-stat">
+          <span class="s-val">Jakarta, Indonesia</span>
+          <span class="s-lbl">Based in</span>
+        </div>
+        <div class="hero-stat">
+          <span class="s-val">SQL · EE · AI</span>
+          <span class="s-lbl">Exploring</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="divider"></div>
+  <section id="about">
+    <div class="wrap">
+      <div class="reveal"><div class="section-label">About me</div></div>
+      <div class="about-grid">
+        <div class="about-body">
+          <p class="reveal">
+            Hi, I'm River — a <strong>Chinese Indonesian</strong> from Jakarta who studied
+            Business Management with Marketing at the <strong>University of Leeds</strong>.
+            I'm a marketer at heart who believes in the power of a good story, but I've always
+            been pulled toward understanding how things actually work under the hood.
+          </p>
+          <div class="about-pull reveal reveal-d1">
+            "Curiosity is the only strategy I've committed to long-term."
+          </div>
+          <p class="reveal reveal-d2">
+            I'm competitive by nature — I played football and rugby seriously, got into
+            e-sports, and now I'm channelling that energy into <strong>running and swimming</strong>.
+            The same drive applies to everything I do professionally and intellectually.
+          </p>
+          <p class="reveal reveal-d3">
+            This site is where I document that journey. Projects I've built, things I've
+            learned, ideas I can't stop thinking about. No filter, just curiosity.
+          </p>
+        </div>
+        <div class="about-right reveal reveal-d2">
+          <div class="info-box">
+            <div class="info-box-label">Currently learning</div>
+            <p>Back-end development (SQL) and AI model development</p>
+            <p>Electrical engineering via Raspberry Pi &amp; Arduino projects</p>
+          </div>
+          <div class="info-box">
+            <div class="info-box-label">Interests</div>
+            <div class="interests">
+              <span class="interest-tag">Football</span>
+              <span class="interest-tag">Running</span>
+              <span class="interest-tag">Swimming</span>
+              <span class="interest-tag">E-sports</span>
+              <span class="interest-tag">Strategy</span>
+              <span class="interest-tag">Finance</span>
+              <span class="interest-tag">Technology</span>
+              <span class="interest-tag">Storytelling</span>
+              <span class="interest-tag">Engineering</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <div class="divider"></div>
+  <section id="experience">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="section-label">Experience</div>
+        <h2 class="section-title">Where I've <em>worked.</em></h2>
+      </div>
+      <div class="exp-item reveal">
+        <div>
+          <div class="exp-period">2024 – Present</div>
+          <div class="exp-company">Accenture</div>
+        </div>
+        <div class="exp-content">
+          <h3>Management Consultant Analyst</h3>
+          <p>Working with clients to solve complex business problems across strategy, operations, and transformation.</p>
+        </div>
+      </div>
+      <div class="exp-item reveal reveal-d1">
+        <div>
+          <div class="exp-period">2024</div>
+          <div class="exp-company">mGanik</div>
+        </div>
+        <div class="exp-content">
+          <h3>Project Executive (Internship)</h3>
+          <p>mGanik is a growing startup operating across diabetes healthcare products and the sexual wellness market. I came in to help bring structure and operational rigour to a fast-scaling team.</p>
+          <ul class="exp-bullets">
+            <li>Developed a business-building framework to reverse-engineer the company's success and create a repeatable growth model — a genuinely novel challenge with no off-the-shelf solution.</li>
+            <li>Built a full <strong>Digital Asset Management (DAM) system</strong> using Synology and ResourceSpace — zero prior coding experience. Self-taught Linux, networking, and port forwarding to deploy a working internal tool from scratch.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <div class="divider"></div>
+  <section id="projects">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="section-label">Projects</div>
+        <h2 class="section-title">Things I've <em>built.</em></h2>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card reveal">
+          <div class="project-num">01</div>
+          <span class="project-tag-pill">Infrastructure</span>
+          <h3>DAM System at mGanik <span class="proud-badge">Most proud</span></h3>
+          <p>Built a full Digital Asset Management system using Synology + ResourceSpace with zero coding experience. Learned Linux, networking, and port forwarding — self-hosted the whole thing.</p>
+          <div class="project-card-meta"><span>Internship · 2024</span></div>
+        </div>
+        <div class="project-card reveal reveal-d1">
+          <div class="project-num">02</div>
+          <span class="project-tag-pill">Strategy</span>
+          <h3>Business-Building Framework</h3>
+          <p>Developed a framework to reverse-engineer startup success and operationalise growth — adapting theory to the messy reality of a young company in a niche market.</p>
+          <div class="project-card-meta"><span>mGanik · 2024</span></div>
+        </div>
+        <div class="project-card reveal reveal-d2">
+          <div class="project-num">03</div>
+          <span class="project-tag-pill">Hardware</span>
+          <h3>Raspberry Pi &amp; Arduino Experiments</h3>
+          <p>Small hardware projects exploring electrical engineering fundamentals — circuits, sensors, and basic embedded programming.</p>
+          <div class="project-card-meta"><span>Personal · Ongoing</span></div>
+        </div>
+        <!--
+          ADD A PROJECT — duplicate this block:
+
+          <div class="project-card">
+            <div class="project-num">04</div>
+            <span class="project-tag-pill">Tag</span>
+            <h3>Project Title</h3>
+            <p>Description.</p>
+            <div class="project-card-meta"><span>Context · Year</span></div>
+          </div>
+        -->
+      </div>
+    </div>
+  </section>
+
+  <!-- WRITING PREVIEW -->
+  <div class="divider"></div>
+  <section id="writing-preview">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="section-label">Writing</div>
+        <h2 class="section-title">Latest <em>articles.</em></h2>
+      </div>
+      <div class="articles-list reveal">
+        {recentPosts.map(post => (
+          <a href={`/posts/${post.id}`} class="article-row">
+            <div class="article-date">{post.data.date}</div>
+            <div class="article-content">
+              <h3>{post.data.title}</h3>
+              <p>{post.data.summary}</p>
+              <div class="article-tags">
+                {post.data.tags.map(tag => (
+                  <span class="article-tag">{tag}</span>
+                ))}
+              </div>
+            </div>
+            <div class="article-arrow">↗</div>
+          </a>
+        ))}
+      </div>
+      <div style="margin-top: 2rem;" class="reveal reveal-d1">
+        <a href="/blog" class="btn-ghost">All writing →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <div class="divider"></div>
+  <section id="skills">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="section-label">Skills</div>
+        <h2 class="section-title">What I <em>know.</em></h2>
+      </div>
+      <div class="skills-grid">
+        <div class="reveal">
+          <div class="skill-group-title">Consulting &amp; strategy</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Strategy</span>
+            <span class="skill-pill">Frameworks</span>
+            <span class="skill-pill">Problem solving</span>
+            <span class="skill-pill">Stakeholder mgmt</span>
+            <span class="skill-pill">Marketing</span>
+          </div>
+        </div>
+        <div class="reveal reveal-d1">
+          <div class="skill-group-title">Technical (learning)</div>
+          <div class="skill-pills">
+            <span class="skill-pill">SQL</span>
+            <span class="skill-pill">Linux</span>
+            <span class="skill-pill">Networking</span>
+            <span class="skill-pill">Raspberry Pi</span>
+            <span class="skill-pill">Arduino</span>
+            <span class="skill-pill">AI / ML basics</span>
+          </div>
+        </div>
+        <div class="reveal reveal-d2">
+          <div class="skill-group-title">Tools</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Synology / NAS</span>
+            <span class="skill-pill">ResourceSpace</span>
+            <span class="skill-pill">Excel</span>
+            <span class="skill-pill">PowerPoint</span>
+            <span class="skill-pill">Notion</span>
+          </div>
+        </div>
+        <div class="reveal reveal-d3">
+          <div class="skill-group-title">Human skills</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Storytelling</span>
+            <span class="skill-pill">Writing</span>
+            <span class="skill-pill">Curiosity</span>
+            <span class="skill-pill">Competitiveness</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <div class="divider"></div>
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div class="reveal">
+          <div class="section-label">Contact</div>
+          <h2 class="contact-h">Let's <em>talk.</em></h2>
+          <p class="contact-body">
+            Always up for a good conversation — whether it's about a project, an idea,
+            a collaboration, or just something interesting you've been thinking about.
+          </p>
+          <a href="mailto:rivwij@gmail.com" class="btn-primary"><span>Send me an email</span></a>
+        </div>
+        <div class="reveal reveal-d2">
+          <div class="contact-links">
+            <a href="https://www.linkedin.com/in/river-wijaya" class="contact-link" target="_blank" rel="noopener">
+              <div class="contact-link-icon">in</div>River Wijaya — LinkedIn
+            </a>
+            <a href="https://github.com/Onchch" class="contact-link" target="_blank" rel="noopener">
+              <div class="contact-link-icon">gh</div>Onchch — GitHub
+            </a>
+            <a href="mailto:rivwij@gmail.com" class="contact-link">
+              <div class="contact-link-icon">@</div>rivwij@gmail.com
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
