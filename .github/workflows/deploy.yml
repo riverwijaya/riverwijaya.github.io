@@ -28,7 +28,7 @@ jobs:
         run: npm install
 
       - name: Build Astro site
-        run: npm install -g astro
+        run: npm run build
 
       - uses: actions/upload-pages-artifact@v3
         with:
