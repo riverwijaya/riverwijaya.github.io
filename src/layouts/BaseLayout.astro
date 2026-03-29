@@ -1,0 +1,109 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  activePage?: string;
+}
+const { title = 'River Primavera Wijaya', activePage = '' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content="Portfolio and writing of River Primavera Wijaya — consultant, builder, and perpetual learner based in Jakarta." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div id="cursor"><div id="cursor-dot"></div><div id="cursor-ring"></div></div>
+  <div id="progress"></div>
+
+  <nav>
+    <a href="/" class="nav-logo">RPW</a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="/"        class={activePage === 'home'     ? 'active' : ''}>Home</a></li>
+        <li><a href="/writing" class={activePage === 'writing'  ? 'active' : ''}>Writing</a></li>
+        <li><a href="/projects"class={activePage === 'projects' ? 'active' : ''}>Projects</a></li>
+        <li><a href="/about"   class={activePage === 'about'    ? 'active' : ''}>About</a></li>
+      </ul>
+      <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">☀</button>
+    </div>
+  </nav>
+
+  <slot />
+
+  <script>
+    // Theme
+    function toggleTheme() {
+      const html = document.documentElement;
+      const btn  = document.getElementById('theme-btn') as HTMLButtonElement;
+      const dark = html.dataset.theme === 'dark';
+      html.dataset.theme = dark ? 'light' : 'dark';
+      btn.textContent    = dark ? '☀' : '☾';
+      localStorage.setItem('rpw-theme', html.dataset.theme);
+    }
+    (function() {
+      const s = localStorage.getItem('rpw-theme');
+      if (!s) return;
+      document.documentElement.dataset.theme = s;
+      const b = document.getElementById('theme-btn') as HTMLButtonElement;
+      if (b) b.textContent = s === 'dark' ? '☾' : '☀';
+    })();
+
+    // Cursor
+    const dot  = document.getElementById('cursor-dot')!;
+    const ring = document.getElementById('cursor-ring')!;
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove', e => {
+      mx=e.clientX; my=e.clientY;
+      dot.style.left=mx+'px'; dot.style.top=my+'px';
+    });
+    (function tick(){ rx+=(mx-rx)*0.11; ry+=(my-ry)*0.11; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(tick); })();
+    document.querySelectorAll('a,button,.feed-card,.interest-tag,.about-link,.profile-link').forEach(el => {
+      el.addEventListener('mouseenter', ()=>document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', ()=>document.body.classList.remove('cursor-hover'));
+    });
+    document.addEventListener('mousedown', ()=>document.body.classList.add('cursor-click'));
+    document.addEventListener('mouseup',   ()=>document.body.classList.remove('cursor-click'));
+
+    // Scroll progress + reveal
+    const bar = document.getElementById('progress')!;
+    function onScroll() {
+      const d = document.documentElement;
+      bar.style.width = (d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%';
+      document.querySelectorAll('.reveal').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight*0.9) el.classList.add('visible');
+      });
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    setTimeout(onScroll, 80);
+
+    // Typewriter
+    const WORDS = ['a Consultant.', 'a Builder.', 'a Tech Enthusiast.', 'always learning.'];
+    (function typewriter() {
+      const el = document.getElementById('typewriter-word');
+      if (!el) return;
+      let wi=0, ci=0, del=false;
+      function tick() {
+        const w = WORDS[wi];
+        el.textContent = w.slice(0,ci);
+        if (!del) {
+          if (ci < w.length) { ci++; setTimeout(tick, 80); }
+          else setTimeout(()=>{ del=true; tick(); }, 1800);
+        } else {
+          if (ci > 0) { ci--; setTimeout(tick, 45); }
+          else { del=false; wi=(wi+1)%WORDS.length; setTimeout(tick, 300); }
+        }
+      }
+      tick();
+    })();
+
+  </script>
+</body>
+</html>

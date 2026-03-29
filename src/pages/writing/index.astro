@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('writing', ({data}) => !data.draft);
+const posts = all.sort((a,b) => {
+  const da = isNaN(Date.parse(a.data.date)) ? 0 : Date.parse(a.data.date);
+  const db = isNaN(Date.parse(b.data.date)) ? 0 : Date.parse(b.data.date);
+  return db - da;
+});
+
+
+function formatDate(d: string) {
+  if (!d || isNaN(Date.parse(d))) return d;
+  return new Date(d).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'});
+}
+---
+
+<BaseLayout title="Writing — River Primavera Wijaya" activePage="writing">
+<div class="main-wrap">
+
+  <div class="page-header">
+    <h1 class="page-title">Writing</h1>
+    <p class="page-subtitle">Articles, essays and thoughts — on tech, strategy, business and whatever else I can't stop thinking about.</p>
+
+  </div>
+
+  <div class="feed">
+    {posts.map(post => (
+      <a href={`/writing/${post.id}`} class="feed-card type-writing">
+        <div class="feed-card-body">
+          <div class="feed-card-meta">
+            <span class="feed-card-type">Writing</span>
+            <span class="feed-card-dot">·</span>
+            <span class="feed-card-date">{formatDate(post.data.date)}</span>
+            {post.data.readtime && <>
+              <span class="feed-card-dot">·</span>
+              <span class="feed-card-readtime">{post.data.readtime}</span>
+            </>}
+          </div>
+          <div class="feed-card-title">{post.data.title}</div>
+          <div class="feed-card-summary">{post.data.summary}</div>
+          <div class="feed-card-tags">
+            {post.data.tags.map((t: string) => <span class="feed-card-tag">{t}</span>)}
+          </div>
+        </div>
+        {post.data.image
+          ? <img src={post.data.image} alt={post.data.title} class="feed-card-thumb" />
+          : <div class="feed-card-thumb-placeholder">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+              </svg>
+            </div>
+        }
+      </a>
+    ))}
+  </div>
+
+</div>
+<footer><span>River Primavera Wijaya</span><span>Jakarta · Always learning</span></footer>
+</BaseLayout>

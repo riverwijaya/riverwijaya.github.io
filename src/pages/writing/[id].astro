@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('writing', ({data}) => !data.draft);
+  return posts.map(post => ({ params: { id: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+function formatDate(d: string) {
+  if (!d || isNaN(Date.parse(d))) return d;
+  return new Date(d).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'});
+}
+---
+
+<BaseLayout title={`${post.data.title} — River Primavera Wijaya`} activePage="writing">
+<div class="main-wrap">
+
+  <div class="reader-header">
+    <a href="/writing" class="btn-back">← Back to writing</a>
+    <div class="reader-tags">
+      {post.data.tags.map((t: string) => <span class="reader-tag">{t}</span>)}
+    </div>
+    <h1 class="reader-title">{post.data.title}</h1>
+    <div class="reader-meta">
+      <span>River Primavera Wijaya</span>
+      <span>{formatDate(post.data.date)}</span>
+      {post.data.readtime && <span>{post.data.readtime}</span>}
+    </div>
+  </div>
+
+  {post.data.image && (
+    <div class="reader-cover">
+      <img src={post.data.image} alt={post.data.title} />
+    </div>
+  )}
+
+  <div class="prose">
+    <Content />
+  </div>
+
+</div>
+<footer><span>River Primavera Wijaya</span><span>Jakarta · Always learning</span></footer>
+</BaseLayout>

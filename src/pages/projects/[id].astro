@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({data}) => !data.draft);
+  return projects.map(p => ({ params: { id: p.id }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={`${project.data.title} — River Primavera Wijaya`} activePage="projects">
+<div class="main-wrap">
+
+  <div class="reader-header">
+    <a href="/projects" class="btn-back">← Back to projects</a>
+    <div class="reader-tags">
+      {project.data.tags.map((t: string) => <span class="reader-tag">{t}</span>)}
+      {project.data.proud && <span class="reader-tag" style="background:var(--accent);color:var(--bg)">Most proud</span>}
+    </div>
+    <h1 class="reader-title">{project.data.title}</h1>
+    <div class="reader-meta">
+      <span>River Primavera Wijaya</span>
+      <span>{project.data.date}</span>
+      {project.data.download && (
+        <a href={project.data.download} download class="btn-download">↓ Download</a>
+      )}
+    </div>
+  </div>
+
+  {project.data.image && (
+    <div class="reader-cover">
+      <img src={project.data.image} alt={project.data.title} />
+    </div>
+  )}
+
+  <div class="prose">
+    <Content />
+  </div>
+
+</div>
+<footer><span>River Primavera Wijaya</span><span>Jakarta · Always learning</span></footer>
+</BaseLayout>

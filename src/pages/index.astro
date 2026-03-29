@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const writing  = await getCollection('writing',  ({data}) => !data.draft);
+const projects = await getCollection('projects', ({data}) => !data.draft);
+
+// Merge and sort newest first
+const feed = [...writing, ...projects].sort((a, b) => {
+  const da = isNaN(Date.parse(a.data.date)) ? 0 : Date.parse(a.data.date);
+  const db = isNaN(Date.parse(b.data.date)) ? 0 : Date.parse(b.data.date);
+  return db - da;
+});
+
+function formatDate(d: string) {
+  if (!d || isNaN(Date.parse(d))) return d;
+  return new Date(d).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+}
+---
+
+<BaseLayout title="River Primavera Wijaya" activePage="home">
+<div class="main-wrap">
+
+  <!-- PROFILE -->
+  <div class="profile reveal">
+    <img src="/assets/photo.jpg.png" alt="River Wijaya" class="profile-photo"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+    <div class="profile-photo-placeholder" style="display:none">RPW</div>
+    <div class="profile-body">
+      <h1 class="profile-name">River Primavera Wijaya</h1>
+      <p class="profile-role">I'm <span id="typewriter-word" class="typewriter-word"></span><span class="typewriter-cursor">|</span></p>
+      <p class="profile-bio">
+        Documenting what I build and learn
+        from self-hosting servers with no coding experience, learning basic electrical engineering to my learnings from business and strategy.
+      </p>
+      <div class="profile-links">
+        <a href="https://www.linkedin.com/in/river-wijaya-203222272/" target="_blank" rel="noopener" class="profile-link">LinkedIn</a>
+        <a href="https://github.com/riverwijaya"                target="_blank" rel="noopener" class="profile-link">GitHub</a>
+        <a href="mailto:rivwij@gmail.com"                                                  class="profile-link">Email</a>
+      </div>
+    </div>
+  </div>
+
+  <hr class="feed-divider" />
+
+  <!-- UNIFIED FEED -->
+  <div class="feed">
+    {feed.map(item => {
+      const isWriting = item.collection === 'writing';
+      const href      = isWriting ? `/writing/${item.id}` : `/projects/${item.id}`;
+      const typeLabel = isWriting ? 'Writing' : 'Project';
+      const typeKey   = isWriting ? 'writing' : 'project';
+      return (
+        <a href={href} class={`feed-card type-${typeKey}`}>
+          <div class="feed-card-body">
+            <div class="feed-card-meta">
+              <span class="feed-card-type">{typeLabel}</span>
+              <span class="feed-card-dot">·</span>
+              <span class="feed-card-date">{formatDate(item.data.date)}</span>
+              {isWriting && item.data.readtime && <>
+                <span class="feed-card-dot">·</span>
+                <span class="feed-card-readtime">{item.data.readtime}</span>
+              </>}
+            </div>
+            <div class="feed-card-title">{item.data.title}</div>
+            <div class="feed-card-summary">{item.data.summary}</div>
+            <div class="feed-card-tags">
+              {item.data.tags.map((t: string) => <span class="feed-card-tag">{t}</span>)}
+              {!isWriting && item.data.proud && <span class="feed-card-tag proud">Most proud</span>}
+            </div>
+          </div>
+          {item.data.image
+            ? <img src={item.data.image} alt={item.data.title} class="feed-card-thumb" />
+            : <div class="feed-card-thumb-placeholder">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+                </svg>
+              </div>
+          }
+        </a>
+      );
+    })}
+  </div>
+
+</div>
+<footer>
+  <span>River Primavera Wijaya</span>
+  <span>Jakarta · Always learning</span>
+</footer>
+</BaseLayout>

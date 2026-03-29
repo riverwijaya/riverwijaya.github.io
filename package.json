@@ -1,0 +1,13 @@
+{
+  "name": "rpw-portfolio",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npx astro dev",
+    "build": "npx astro build",
+    "preview": "npx astro preview"
+  },
+  "dependencies": {
+    "astro": "^6.1.1"
+  }
+}
